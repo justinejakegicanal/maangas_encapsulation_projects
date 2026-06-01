@@ -3,3 +3,6 @@ class Car:
         self.__year_model = str(year_model)
         self.__make = str(make)
         self.__speed = 0
+
+    def get_speed(self):
+        return self.__speed
