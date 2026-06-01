@@ -13,6 +13,15 @@ class FanSimulatorApplication:
         fan_unit_one = Fan(speed=Fan.FAST, radius=10.0, color="yellow", on=True)
         fan_unit_two = Fan(speed=Fan.MEDIUM, radius=5.0, color="blue", on=False)
 
+        units_registry = {
+            "Diagnostic Profile Unit Alpha": fan_unit_one, 
+            "Diagnostic Profile Unit Beta": fan_unit_two
+        }
+
+        for identifier, unit in units_registry.items():
+            print(f"📡 Analyzing Status Engine Metrics for: [ {identifier} ]")
+            print("-" * 50)
+
 if __name__ == "__main__":
     app_engine = FanSimulatorApplication()
     app_engine.run_simulation()
