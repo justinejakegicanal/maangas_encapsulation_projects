@@ -20,6 +20,10 @@ class FanSimulatorApplication:
 
         for identifier, unit in units_registry.items():
             print(f"📡 Analyzing Status Engine Metrics for: [ {identifier} ]")
+            print(f" ├── Operational Power Status : {'ON (RUNNING)' if unit.get_on() else 'OFF (STANDBY)'}")
+            print(f" ├── Kinetic Rotation Velocity: Speed Level {unit.get_speed()}")
+            print(f" ├── Physical Blade Radius    : {unit.get_radius()} units")
+            print(f" └── Shell Chromatic Aesthetic: {unit.get_color().upper()}")
             print("-" * 50)
 
 if __name__ == "__main__":
