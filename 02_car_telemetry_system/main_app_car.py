@@ -11,6 +11,10 @@ class CarTelemetryApplication:
         self.clear_screen()
         test_car = Car(2026, "Maangas GT")
 
+        for _ in range(5):
+            test_car.accelerate()
+            print(f"🚀 Accelerating... Current Velocity: {test_car.get_speed()} km/h")
+
 if __name__ == "__main__":
     app_engine = CarTelemetryApplication()
     app_engine.run_simulation()
