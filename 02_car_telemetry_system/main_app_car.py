@@ -13,6 +13,8 @@ class CarTelemetryApplication:
         print("║   MAANGAS PRO CAR TELEMETRY SYSTEM     ║")
         print("╚════════════════════════════════════════╝\n")
 
+        start_time = time.perf_counter()
+
         test_car = Car(2026, "Maangas GT")
 
         for _ in range(5):
@@ -22,6 +24,10 @@ class CarTelemetryApplication:
         for _ in range(5):
             test_car.brake()
             print(f"🛑 Braking... Current Velocity: {test_car.get_speed()} km/h")
+
+        end_time = time.perf_counter()
+        print(f"\n⏱️ Telemetry metrics computed in: {(end_time - start_time) * 1000:.4f} ms")
+        print("\nThank you!")
 
 if __name__ == "__main__":
     app_engine = CarTelemetryApplication()
