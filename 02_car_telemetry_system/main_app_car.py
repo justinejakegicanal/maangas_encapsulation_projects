@@ -9,6 +9,10 @@ class CarTelemetryApplication:
 
     def run_simulation(self):
         self.clear_screen()
+        print("╔════════════════════════════════════════╗")
+        print("║   MAANGAS PRO CAR TELEMETRY SYSTEM     ║")
+        print("╚════════════════════════════════════════╝\n")
+
         test_car = Car(2026, "Maangas GT")
 
         for _ in range(5):
