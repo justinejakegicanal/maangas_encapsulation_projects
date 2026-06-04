@@ -28,3 +28,20 @@ class PetBiometricSimulator:
                 break
             except ValueError:
                 print(" [ERROR]: Please enter a valid number for age.")
+
+        pet_record = Pet(name, animal_type, age)
+        self.display_biometric_profile(pet_record)
+
+    def display_biometric_profile(self, pet_obj):
+        print("\n==========================================")
+        print("       SECURE BIOMETRIC PROFILE LOG       ")
+        print("==========================================")
+        time.sleep(0.6)
+        print(f" [+] Registry Name:  {pet_obj.get_name().upper()}")
+        time.sleep(0.4)
+        print(f" [+] Species Type:   {pet_obj.get_animal_type().title()}")
+        time.sleep(0.4)
+        print(f" [+] Calculated Age: {pet_obj.get_age()} year(s) old")
+        print("==========================================")
+        time.sleep(0.6)
+        print(" [SUCCESS]: Biometric signature saved cleanly!\n")
