@@ -1,17 +1,3 @@
 class Car:
-    def __init__(self, year_model, make):
-        self.__year_model = str(year_model)
-        self.__make = str(make)
-        self.__speed = 0
-
-    def get_speed(self):
-        return self.__speed
-
-    def accelerate(self):
-        self.__speed += 5
-
-    def brake(self):
-        if self.__speed >= 5:
-            self.__speed -= 5
-        else:
-            self.__speed = 0
+    def __init__(self, brand, model, year):
+        pass
