@@ -73,3 +73,28 @@ class CarSimulatorUI:
                     except ValueError:
                         print(" [ERROR]: Please enter a valid integer.")
                 time.sleep(1.5)
+
+            elif choice == "3":
+                if not car.is_engine_on():
+                    print(" [WARNING]: Engine is off. Brakes are locked.")
+                    time.sleep(1.5)
+                    continue
+                while True:
+                    try:
+                        amt = int(input(" Enter braking decrement (km/h): "))
+                        if amt < 0:
+                            print(" [ERROR]: Decrement cannot be negative.")
+                            continue
+                        car.brake(amt)
+                        print(" [SUCCESS]: Velocity decreased.")
+                        break
+                    except ValueError:
+                        print(" [ERROR]: Please enter a valid integer.")
+                time.sleep(1.5)
+            elif choice == "4":
+                print("\n [SYSTEM]: Disconnecting telemetry stream...")
+                time.sleep(1)
+                break
+            else:
+                print(" [ERROR]: Invalid transmission option.")
+                time.sleep(1)
