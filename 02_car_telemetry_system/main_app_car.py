@@ -1,34 +1,4 @@
-import os
-import time
-from car_logic import Car
+from car_simulation_ui import CarSimulatorUI
 
-class CarTelemetryApplication:
-    @staticmethod
-    def clear_screen():
-        os.system('cls' if os.name == 'nt' else 'clear')
-
-    def run_simulation(self):
-        self.clear_screen()
-        print("╔════════════════════════════════════════╗")
-        print("║   MAANGAS PRO CAR TELEMETRY SYSTEM     ║")
-        print("╚════════════════════════════════════════╝\n")
-
-        start_time = time.perf_counter()
-
-        test_car = Car(2026, "Maangas GT")
-
-        for _ in range(5):
-            test_car.accelerate()
-            print(f"🚀 Accelerating... Current Velocity: {test_car.get_speed()} km/h")
-
-        for _ in range(5):
-            test_car.brake()
-            print(f"🛑 Braking... Current Velocity: {test_car.get_speed()} km/h")
-
-        end_time = time.perf_counter()
-        print(f"\n⏱️ Telemetry metrics computed in: {(end_time - start_time) * 1000:.4f} ms")
-        print("\nThank you!")
-
-if __name__ == "__main__":
-    app_engine = CarTelemetryApplication()
-    app_engine.run_simulation()
+app_launcher = CarSimulatorUI()
+app_launcher.start_registry_flow()
