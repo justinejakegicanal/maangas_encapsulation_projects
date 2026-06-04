@@ -55,3 +55,21 @@ class CarSimulatorUI:
                 status = car.toggle_engine()
                 print(f" [SYSTEM]: {status}.")
                 time.sleep(1.5)
+            
+            elif choice == "2":
+                if not car.is_engine_on():
+                    print(" [WARNING]: Cannot accelerate. Start the engine first!")
+                    time.sleep(1.5)
+                    continue
+                while True:
+                    try:
+                        amt = int(input(" Enter acceleration increment (km/h): "))
+                        if amt < 0:
+                            print(" [ERROR]: Increment cannot be negative.")
+                            continue
+                        car.accelerate(amt)
+                        print(" [SUCCESS]: Velocity increased.")
+                        break
+                    except ValueError:
+                        print(" [ERROR]: Please enter a valid integer.")
+                time.sleep(1.5)
