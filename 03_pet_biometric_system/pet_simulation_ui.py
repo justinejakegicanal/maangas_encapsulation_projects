@@ -1,6 +1,5 @@
 import os
 import time
-from pet_logic import Pet
 
 class PetBiometricSimulator:
     @staticmethod
@@ -10,38 +9,75 @@ class PetBiometricSimulator:
     def start_registry_flow(self):
         self.clear_terminal()
         print("==========================================")
-        print("      PET BIOMETRIC REGISTRY SYSTEM       ")
+        print("           PET REGISTRY SYSTEM            ")
         print("==========================================")
-        print(" [SYSTEM]: Initializing secure biometric links...")
+        print(" [SYSTEM]: Initializing biometric scanners...")
         time.sleep(1)
 
-        print("\n>>> ENTER PET BIOMETRIC DETAILS <<<")
+        print("\n>>> CONFIGURING PET BIOMETRICS <<<")
         name = input(" Enter Pet Name: ").strip()
-        animal_type = input(" Enter Animal Type (e.g., Dog, Cat): ").strip()
-        
+        animal_type = input(" Enter Animal Type: ").strip()
+
         while True:
             try:
-                age = int(input(" Enter Pet Age (years): "))
+                age = int(input(" Enter Pet Age: "))
                 if age < 0:
-                    print(" [ERROR]: Age cannot be negative!")
+                    print(" [ERROR]: Age cannot be negative.")
                     continue
                 break
             except ValueError:
-                print(" [ERROR]: Please enter a valid number for age.")
+                print(" [ERROR]: Please enter a valid integer for age.")
 
-        pet_record = Pet(name, animal_type, age)
-        self.display_biometric_profile(pet_record)
+        from pet_logic import Pet
+        pet_instance = Pet(name, animal_type, age)
+        self.start_control_loop(pet_instance)
 
-    def display_biometric_profile(self, pet_obj):
-        print("\n==========================================")
-        print("       SECURE BIOMETRIC PROFILE LOG       ")
-        print("==========================================")
-        time.sleep(0.6)
-        print(f" [+] Registry Name:  {pet_obj.get_name().upper()}")
-        time.sleep(0.4)
-        print(f" [+] Species Type:   {pet_obj.get_animal_type().title()}")
-        time.sleep(0.4)
-        print(f" [+] Calculated Age: {pet_obj.get_age()} year(s) old")
-        print("==========================================")
-        time.sleep(0.6)
-        print(" [SUCCESS]: Biometric signature saved cleanly!\n")
+    def start_control_loop(self, pet):
+        while True:
+            self.clear_terminal()
+            print("==========================================")
+            print("         PET BIOMETRIC DASHBOARD          ")
+            print("==========================================")
+            print(f" [+] Pet Name:    {pet.get_name()}")
+            print(f" [+] Animal Type: {pet.get_animal_type()}")
+            print(f" [+] Pet Age:     {pet.get_age()} years old")
+            
+            pulse_frames = ['_v_v_v_', 'v_v_v_v', '_v_v_v_', '_______']
+            for frame in pulse_frames:
+                self.clear_terminal()
+                print("==========================================")
+                print("         PET BIOMETRIC DASHBOARD          ")
+                print("==========================================")
+                print(f" [+] Pet Name:    {pet.get_name()}")
+                print(f" [+] Animal Type: {pet.get_animal_type()}")
+                print(f" [+] Pet Age:     {pet.get_age()} years old")
+                print(f" [+] Vital Pulse: [ {frame} ] Active Monitoring")
+                print("==========================================")
+                time.sleep(0.15)
+
+            print(" [1] Update Pet Age")
+            print(" [2] Terminate Biometric Session")
+            
+            choice = input("\n Select Action: ").strip()
+            
+            if choice == "1":
+                while True:
+                    try:
+                        new_age = int(input(" Enter new age: "))
+                        if new_age < 0:
+                            print(" [ERROR]: Age cannot be negative.")
+                            continue
+                        
+                        pet.set_age(new_age)
+                        print(f" [SUCCESS]: Age updated to {pet.get_age()}.")
+                        break
+                    except ValueError:
+                        print(" [ERROR]: Please enter a valid integer.")
+                time.sleep(1.5)
+            elif choice == "2":
+                print("\n [SYSTEM]: Disconnecting biometric stream...")
+                time.sleep(1)
+                break
+            else:
+                print(" [ERROR]: Invalid transmission option.")
+                time.sleep(1)

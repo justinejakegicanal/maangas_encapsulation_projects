@@ -12,3 +12,6 @@ class Pet:
 
     def get_age(self):
         return self.__age
+
+    def set_age(self, age):
+        self.__age = int(age)
