@@ -11,8 +11,15 @@ class CarSimulatorUI:
         print("==========================================")
         print("         VEHICLE REGISTRY SYSTEM          ")
         print("==========================================")
+        
         print(" [SYSTEM]: Establishing terminal downlink...")
-        time.sleep(1)
+        frames = ['/', '-', '\\', '|']
+        for i in range(5):
+            symbol = frames[i % 4]
+            print(f" Connecting to ECU Core Node... {symbol}", end="\r")
+            time.sleep(0.3)
+        print(" [OK]: ECU Satellite Core Connected.         ")
+        time.sleep(0.5)
 
         print("\n>>> CONFIGURING VEHICLE SPECS <<<")
         brand = input(" Enter Car Brand: ").strip()
@@ -21,7 +28,7 @@ class CarSimulatorUI:
         while True:
             try:
                 year = int(input(" Enter Manufacturing Year: "))
-                if year <= 1885:  # Taon kung kailan naimbento ang unang kotse
+                if year <= 1885:
                     print(" [ERROR]: Invalid year. Please enter a realistic vehicle year.")
                     continue
                 break
@@ -31,7 +38,7 @@ class CarSimulatorUI:
         from car_logic import Car
         car_instance = Car(brand, model, year)
         self.start_control_loop(car_instance)
-    
+
     def start_control_loop(self, car):
         while True:
             self.clear_terminal()
@@ -42,7 +49,10 @@ class CarSimulatorUI:
             print(f" [+] Vehicle Model: {car.get_model()}")
             print(f" [+] Model Year:    {car.get_year()}")
             print(f" [+] Engine Status: {'ON' if car.is_engine_on() else 'OFF'}")
-            print(f" [+] Current Speed: {car.get_current_speed()} km/h")
+            
+            speed = car.get_current_speed()
+            gauge_bar = "█" * (speed // 10)
+            print(f" [+] Current Speed: {speed} km/h [{gauge_bar:<15}]")
             print("==========================================")
             print(" [1] Toggle Engine Ignition")
             print(" [2] Step on Accelerator")
@@ -55,7 +65,6 @@ class CarSimulatorUI:
                 status = car.toggle_engine()
                 print(f" [SYSTEM]: {status}.")
                 time.sleep(1.5)
-            
             elif choice == "2":
                 if not car.is_engine_on():
                     print(" [WARNING]: Cannot accelerate. Start the engine first!")
@@ -73,7 +82,6 @@ class CarSimulatorUI:
                     except ValueError:
                         print(" [ERROR]: Please enter a valid integer.")
                 time.sleep(1.5)
-
             elif choice == "3":
                 if not car.is_engine_on():
                     print(" [WARNING]: Engine is off. Brakes are locked.")
