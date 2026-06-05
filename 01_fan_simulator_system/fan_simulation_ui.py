@@ -9,23 +9,23 @@ class FanSimulatorUI:
     def start_registry_flow(self):
         self.clear_terminal()
         print("==========================================")
-        print("         ELECTRIC FAN REGISTRY UI         ")
+        print("           FAN REGISTRY SYSTEM            ")
         print("==========================================")
-        print(" [SYSTEM]: Initializing core motor telemetry...")
+        print(" [SYSTEM]: Initializing device controllers...")
         time.sleep(1)
 
-        print("\n>>> CONFIGURING FAN SPECIFICATIONS <<<")
+        print("\n>>> CONFIGURING DEVICE SPECS <<<")
         brand = input(" Enter Fan Brand: ").strip()
-
+        
         while True:
             try:
-                max_speed = int(input(" Enter Maximum Speed (1-5): "))
+                max_speed = int(input(" Enter Maximum Speed Level: "))
                 if max_speed <= 0:
-                    print(" [ERROR]: Maximum speed must be greater than 0!")
+                    print(" [ERROR]: Maximum speed must be greater than 0.")
                     continue
                 break
             except ValueError:
-                print(" [ERROR]: Please enter a valid integer for speed.")
+                print(" [ERROR]: Please enter a valid integer for maximum speed.")
 
         from fan_logic import Fan
         fan_instance = Fan(brand, max_speed)
@@ -35,33 +35,46 @@ class FanSimulatorUI:
         while True:
             self.clear_terminal()
             print("==========================================")
-            print("          FAN TELEMETRY MONITOR          ")
+            print("          FAN TELEMETRY SYSTEM            ")
             print("==========================================")
             print(f" [+] Fan Brand:    {fan.get_brand()}")
-            print(f" [+] Max Speed:    {fan.get_max_speed()}")
+            print(f" [+] Power Status: {'ON' if fan.get_current_speed() > 0 else 'OFF'}")
             print(f" [+] Current Speed: {fan.get_current_speed()}")
             print("==========================================")
-            print(" [1] Change Speed Setting")
-            print(" [2] Shutdown / Terminate Simulation")
+            print(" [1] Set Fan Speed")
+            print(" [2] Terminate Fan Session")
             
             choice = input("\n Select Action: ").strip()
             
             if choice == "1":
                 while True:
                     try:
-                        new_speed = int(input(f" Enter speed level (0-{fan.get_max_speed()}): "))
-                        if fan.set_speed(new_speed):
-                            print(" [SUCCESS]: Motor rotation velocity updated.")
-                        else:
-                            print(" [ERROR]: Invalid speed adjustment setting!")
+                        speed = int(input(" Enter speed level (0 for OFF): "))
+                        fan.set_speed(speed)
+                        
+                        if speed > 0:
+                            frames = ['-', '\\', '|', '/']
+                            for _ in range(12):
+                                for frame in frames:
+                                    self.clear_terminal()
+                                    print("==========================================")
+                                    print("          FAN TELEMETRY SYSTEM            ")
+                                    print("==========================================")
+                                    print(f" [+] Fan Brand:    {fan.get_brand()}")
+                                    print(f" [+] Power Status: ON")
+                                    print(f" [+] Current Speed: {speed}  [{frame}]")
+                                    print("==========================================")
+                                    time.sleep(0.05 / speed)
+                        
+                        print(f" [SUCCESS]: Fan speed updated to {speed}.")
                         break
                     except ValueError:
-                        print(" [ERROR]: Please enter a valid integer for speed level.")
-                time.sleep(1.5)
+                        print(" [ERROR]: Please enter a valid integer.")
+                time.sleep(1)
             elif choice == "2":
-                print("\n [SYSTEM]: Powering down magnetic core coils...")
+                print("\n [SYSTEM]: Disconnecting device stream...")
                 time.sleep(1)
                 break
             else:
-                print(" [ERROR]: Invalid selection option.")
+                print(" [ERROR]: Invalid transmission option.")
                 time.sleep(1)
